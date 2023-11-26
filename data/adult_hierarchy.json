@@ -1,0 +1,475 @@
+[
+    {
+        "name": 0,
+        "node_list": [],
+        "value_list": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+        ],
+        "level_to_size": {
+            "0": 16
+        }
+    },
+    {
+        "name": 1,
+        "node_list": [
+            {
+                "name": 16,
+                "node_list": [],
+                "value_list": [
+                    "Federal-gov",
+                    "Local-gov",
+                    "State-gov"
+                ],
+                "level_to_size": null
+            },
+            {
+                "name": 17,
+                "node_list": [],
+                "value_list": [
+                    "Self-emp-inc",
+                    "Self-emp-not-inc"
+                ],
+                "level_to_size": null
+            }
+        ],
+        "value_list": [
+            "Private",
+            "Without-pay"
+        ],
+        "level_to_size": {
+            "0": 4,
+            "1": 7
+        }
+    },
+    {
+        "name": 2,
+        "node_list": [],
+        "value_list": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+        ],
+        "level_to_size": {
+            "0": 16
+        }
+    },
+    {
+        "name": 3,
+        "node_list": [
+            {
+                "name": 19,
+                "node_list": [
+                    {
+                        "name": 20,
+                        "node_list": [],
+                        "value_list": [
+                            "5th-6th",
+                            "7th-8th"
+                        ],
+                        "level_to_size": null
+                    },
+                    {
+                        "name": 21,
+                        "node_list": [],
+                        "value_list": [
+                            "9th",
+                            "10th",
+                            "11th",
+                            "12th"
+                        ],
+                        "level_to_size": null
+                    }
+                ],
+                "value_list": [
+                    "Preschool",
+                    "1st-4th",
+                    "HS-grad"
+                ],
+                "level_to_size": null
+            },
+            {
+                "name": 22,
+                "node_list": [],
+                "value_list": [
+                    "Some-college",
+                    "Assoc-voc",
+                    "Assoc-acdm"
+                ],
+                "level_to_size": null
+            },
+            {
+                "name": 23,
+                "node_list": [
+                    {
+                        "name": 24,
+                        "node_list": [],
+                        "value_list": [
+                            "Masters",
+                            "Prof-school",
+                            "Doctorate"
+                        ],
+                        "level_to_size": null
+                    }
+                ],
+                "value_list": [
+                    "Bachelors"
+                ],
+                "level_to_size": null
+            }
+        ],
+        "value_list": [],
+        "level_to_size": {
+            "0": 3,
+            "1": 10,
+            "2": 16
+        }
+    },
+    {
+        "name": 4,
+        "node_list": [],
+        "value_list": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+        ],
+        "level_to_size": {
+            "0": 16
+        }
+    },
+    {
+        "name": 5,
+        "node_list": [
+            {
+                "name": 26,
+                "node_list": [],
+                "value_list": [
+                    "Married-AF-spouse",
+                    "Married-civ-spouse",
+                    "Married-spouse-absent"
+                ],
+                "level_to_size": null
+            },
+            {
+                "name": 27,
+                "node_list": [],
+                "value_list": [
+                    "Separated",
+                    "Widowed",
+                    "Divorced"
+                ],
+                "level_to_size": null
+            }
+        ],
+        "value_list": [
+            "Never-married"
+        ],
+        "level_to_size": {
+            "0": 3,
+            "1": 7
+        }
+    },
+    {
+        "name": 6,
+        "node_list": [],
+        "value_list": [
+            "Adm-clerical",
+            "Armed-Forces",
+            "Craft-repair",
+            "Exec-managerial",
+            "Farming-fishing",
+            "Handlers-cleaners",
+            "Machine-op-inspct",
+            "Other-service",
+            "Priv-house-serv",
+            "Prof-specialty",
+            "Protective-serv",
+            "Sales",
+            "Tech-support",
+            "Transport-moving"
+        ],
+        "level_to_size": {
+            "0": 14
+        }
+    },
+    {
+        "name": 7,
+        "node_list": [
+            {
+                "name": 30,
+                "node_list": [],
+                "value_list": [
+                    "Husband",
+                    "Wife",
+                    "Own-child"
+                ],
+                "level_to_size": null
+            }
+        ],
+        "value_list": [
+            "Other-relative",
+            "Not-in-family",
+            "Unmarried"
+        ],
+        "level_to_size": {
+            "0": 4,
+            "1": 6
+        }
+    },
+    {
+        "name": 8,
+        "node_list": [
+            {
+                "name": 32,
+                "node_list": [],
+                "value_list": [
+                    "Amer-Indian-Eskimo",
+                    "Asian-Pac-Islander",
+                    "Other"
+                ],
+                "level_to_size": null
+            }
+        ],
+        "value_list": [
+            "White",
+            "Black"
+        ],
+        "level_to_size": {
+            "0": 3,
+            "1": 5
+        }
+    },
+    {
+        "name": 9,
+        "node_list": [],
+        "value_list": [
+            "Female",
+            "Male"
+        ],
+        "level_to_size": {
+            "0": 2
+        }
+    },
+    {
+        "name": 10,
+        "node_list": [],
+        "value_list": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+        ],
+        "level_to_size": {
+            "0": 16
+        }
+    },
+    {
+        "name": 11,
+        "node_list": [],
+        "value_list": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+        ],
+        "level_to_size": {
+            "0": 16
+        }
+    },
+    {
+        "name": 12,
+        "node_list": [],
+        "value_list": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+        ],
+        "level_to_size": {
+            "0": 16
+        }
+    },
+    {
+        "name": 13,
+        "node_list": [
+            {
+                "name": 35,
+                "node_list": [
+                    {
+                        "name": 36,
+                        "node_list": [],
+                        "value_list": [
+                            "Outlying-US(Guam-USVI-etc)",
+                            "Puerto-Rico"
+                        ],
+                        "level_to_size": null
+                    },
+                    {
+                        "name": 37,
+                        "node_list": [],
+                        "value_list": [
+                            "Cambodia",
+                            "China",
+                            "Hong",
+                            "Japan",
+                            "Laos",
+                            "Philippines",
+                            "South",
+                            "Taiwan",
+                            "Thailand",
+                            "Vietnam"
+                        ],
+                        "level_to_size": null
+                    },
+                    {
+                        "name": 38,
+                        "node_list": [],
+                        "value_list": [
+                            "Columbia",
+                            "Ecuador",
+                            "Peru"
+                        ],
+                        "level_to_size": null
+                    },
+                    {
+                        "name": 39,
+                        "node_list": [],
+                        "value_list": [
+                            "Cuba",
+                            "Dominican-Republic",
+                            "El-Salvador",
+                            "Guatemala",
+                            "Haiti",
+                            "Honduras",
+                            "Jamaica",
+                            "Nicaragua",
+                            "Trinadad&Tobago"
+                        ],
+                        "level_to_size": null
+                    },
+                    {
+                        "name": 40,
+                        "node_list": [],
+                        "value_list": [
+                            "England",
+                            "France",
+                            "Germany",
+                            "Greece",
+                            "Holand-Netherlands",
+                            "Hungary",
+                            "Ireland",
+                            "Italy",
+                            "Poland",
+                            "Portugal",
+                            "Scotland",
+                            "Yugoslavia"
+                        ],
+                        "level_to_size": null
+                    }
+                ],
+                "value_list": [
+                    "Canada",
+                    "Mexico",
+                    "India",
+                    "Iran"
+                ],
+                "level_to_size": null
+            }
+        ],
+        "value_list": [
+            "United-States"
+        ],
+        "level_to_size": {
+            "0": 2,
+            "1": 10,
+            "2": 41
+        }
+    },
+    {
+        "name": 14,
+        "node_list": [],
+        "value_list": [
+            "<=50K",
+            ">50K"
+        ],
+        "level_to_size": {
+            "0": 2
+        }
+    }
+]
