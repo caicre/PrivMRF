@@ -62,9 +62,9 @@ Default δ=1e-5. For other values, calculate privacy budget with `cal_privacy_bu
 
 ### 3.1 Attribute Hierarchy
 
-The `adult` dataset experiment bins attribute values to improve noise resistance, as in PrivBayes[1]. This slightly improves PrivMRF performance on `adult` but doesn't always help for other datasets.
+In the `adult` dataset, for each attribute, we merge values into bins. Since the number of data records in a bin is larger than the number of records of each value, merging values provides more resistance to noise. This slightly improves PrivMRF performance on `adult` but doesn't always help for other datasets.
 
-To use attribute hierarchy:
+To use attribute hierarchy for your dataset:
 1. Define hierarchy (see `data/adult_hierarchy.json`) 
 2. Read with `read_hierarchy()` in `PrivMRF/attribute_hierarchy.py`
 3. Pass hierarchy to `PrivMRF.run()`  
