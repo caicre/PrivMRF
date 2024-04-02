@@ -9,7 +9,7 @@ This project provides the implementation of "Data Synthesis via Differentially P
 
 ## 1. Get Started
 
-These codes require Python3.7, cuda11.7 and need to run on a GPU that supports `cupy`. The dependencies can be installed via
+These codes require Python3.8, cuda11.7 and need to run on a GPU that supports `cupy`. The dependencies can be installed via
 
     $ pip3 install -r requirements.txt
 
