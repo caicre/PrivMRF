@@ -3,7 +3,7 @@ name = "privmrf"
 version = "1.1.0"
 description = "Data Synthesis via Differentially Private Markov Random Fields"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.26",
     "scipy>=1.11",

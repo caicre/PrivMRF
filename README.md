@@ -9,7 +9,7 @@ This project provides the implementation of the paper "Data Synthesis via Differ
 ## 1. Setup
 
 Requirements:
-- Python 3.10 or later
+- Python 3.11 or later
 - Optional: an NVIDIA GPU with CUDA 12 drivers. PrivMRF uses the GPU through `cupy` when it is available, and runs on CPU otherwise.
 
 Install dependencies with [uv](https://docs.astral.sh/uv/):
