@@ -1,28 +1,9 @@
 import os
 import json
 from .utils import tools
-import pickle
 import numpy as np
 from .domain import Domain
-import csv
-import random
-import pandas as pd
 from . import attribute_hierarchy as ah
-
-# convert int data to string data
-def data_num_to_str(map_list, np_data):
-    print('  convert int data to string data')
-
-    invert_map_list = []
-    for str_to_int in map_list:
-        invert_map_list.append({value: key for key, value in str_to_int.items()})
-
-    data_list = []
-    attr_num = np_data.shape[1]
-    for line in np_data:
-        data_list.append([invert_map_list[index][line[index]] for index in range(attr_num)])
-
-    return data_list
 
 # for simplicity, convert string data to int data, which can be accepted by models
 # and easy to evaluate. String data and int data are equivalent. Use postprocess to
@@ -75,7 +56,9 @@ def preprocess(data):
 
     for attr in range(attr_num):
         visit_value_list(attr_list[attr], value_to_value_id[attr])
-        # print(attr_list[attr].string())
+        # attributes without hierarchy: the size is the number of values in the data
+        if len(attr_list[attr].node_list) == 0:
+            attr_list[attr].level_to_size = {0: json_domain[attr]['domain']}
 
     print('attrs: ', domain.attr_list)
     print('shape: ', domain.shape)
@@ -159,37 +142,16 @@ def convert_continuous_attribute_to_discrete(
         attr_list[attr].level_to_size[0] = bin_num
     ah.write_hierarchy(attr_list, out_hierarchy_path)
 
-# int to str
-def postprocess(in_path, out_path):
+# int to str: map synthetic data generated from ./preprocess/<data>.csv back to the original values
+def postprocess(data, in_path, out_path):
     print('postprocess data')
 
-    value_id_to_vn = json.load(open('./preprocess/' + data + '_int_to_str.json', 'w'))
+    with open('./preprocess/' + data + '_int_to_str.json', 'r') as in_file:
+        value_id_to_vn = json.load(in_file)
     data_list, headings = tools.read_csv(in_path)
 
     new_data_list = []
     for line in data_list:
-        new_line = [value_id_to_vn[attr][line[attr]] for attr in range(len(headings))]
-        new_data_list.append(line)
+        new_data_list.append([value_id_to_vn[attr][value] for attr, value in enumerate(line)])
 
     tools.write_csv(new_data_list, headings, out_path)
-
-if __name__ == '__main__':
-    pass
-    # def func(data_name):
-    #     data_list, headings = tools.read_csv('./data/'+data_name+'.csv')
-    #     attr_num = len(headings)
-
-    #     attr_list = []
-    #     for i in range(attr_num):
-    #         attr = ah.Attribute(i)
-    #         attr.level_to_size = {0: 2}
-    #         attr.value_list = ["0", "1"]
-    #         attr_list.append(attr)
-
-    #     ah.write_hierarchy(attr_list, './data/'+data_name+'_hierarchy.json')
-
-
-    # preprocess('acs')
-    # preprocess('nltcs')
-    # preprocess('br2000')
-    # preprocess('adult')

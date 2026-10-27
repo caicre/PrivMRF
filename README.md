@@ -9,15 +9,17 @@ This project provides the implementation of the paper "Data Synthesis via Differ
 ## 1. Setup
 
 Requirements:
-- Python 3.8 
-- CUDA 11.7
-- GPU that supports `cupy`
+- Python 3.10 or later
+- Optional: an NVIDIA GPU with CUDA 12 drivers. PrivMRF uses the GPU through `cupy` when it is available, and runs on CPU otherwise.
 
-Install dependencies:
+Install dependencies with [uv](https://docs.astral.sh/uv/):
 
 ```
-pip3 install -r requirements.txt
+uv sync                # CPU only
+uv sync --extra gpu    # with GPU support (cupy)
 ```
+
+Or install the dependencies listed in `pyproject.toml` with pip, e.g. `pip install numpy scipy pandas networkx matplotlib scikit-learn` (add `"cupy-cuda12x[ctk]"` for GPU support).
 
 ## 2. Usage
 
@@ -26,10 +28,10 @@ pip3 install -r requirements.txt
 To reproduce the experimental results from the paper:
 
 ```
-python3 script.py
+uv run python script.py
 ```
 
-This will run PrivMRF once on each of the four datasets and five ε values, reporting the total variation distances (TVD). Runtime is 2-5 hours depending on hardware.
+This will run PrivMRF once on each of the four datasets and six ε values, reporting the total variation distances (TVD). Runtime is 2-5 hours depending on hardware.
 
 You may modify `script.py` to run a subset of the experiments.
 
@@ -38,7 +40,7 @@ You may modify `script.py` to run a subset of the experiments.
 To generate a synthetic dataset with specified settings:
 
 ```
-python3 main.py
+uv run python main.py
 ```
 
 This generates synthetic data without reporting metrics.
@@ -58,7 +60,11 @@ The first line generates synthetic data, the second trains and tests SVMs in par
 
 `main.py` shows how to run PrivMRF with default config. Read your data, preprocess domains to discrete int values, and call `PrivMRF` to train and generate synthetic data.
 
-Default δ=1e-5. For other values, calculate privacy budget with `cal_privacy_budget()` in `PrivMRF/utils/tools.py` and hardcode the result in `privacy_budget()`.
+PrivMRF is designed for discrete attributes, so continuous attributes need to be discretized (e.g., binned) first.
+
+Settings are passed as `p_config` to `PrivMRF.run()`; see `DEFAULT_CONFIG` in `PrivMRF/main.py` for all of them. For example, δ is set by `config['delta']` (default 1e-5), and `config['gpu']` chooses CPU or GPU (default: GPU if available).
+
+`preprocess()` in `PrivMRF/preprocess.py` maps the values of a dataset in `./data` to int values, and `postprocess()` maps synthetic data back to the original values.
 
 ### 3.1 Attribute Hierarchy
 
@@ -72,7 +78,8 @@ To use attribute hierarchy for your dataset:
 
 ## 4. Privacy Budget
 
-Calculate privacy budgets for different ε/δ using `cal_privacy_budget()` in `PrivMRF/utils/tools.py`.
+PrivMRF computes the privacy budget of the Gaussian mechanism for any ε and δ with `privacy_budget()` in `PrivMRF/utils/tools.py` (Lemma 3 of the paper).
+The budget is allocated as in Section 3.6 of the paper: 10% for constructing the attribute graph, 1% for the number of records, 10% for selecting marginals, and 79% for marginal distributions.
 
 ## Code Reference 
 

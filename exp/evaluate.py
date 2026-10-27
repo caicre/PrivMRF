@@ -1,5 +1,4 @@
-import csv
-import PrivMRF.utils as utils
+from PrivMRF.utils import tools
 import numpy as np
 from PrivMRF.domain import Domain
 import random
@@ -7,12 +6,11 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 import json
 import pandas as pd
-from PrivMRF.main import run_syn
+from exp.synthesize import run_syn
 import time
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from PrivMRF.preprocess import read_preprocessed_data
-from sklearn import preprocessing
 import os
 import multiprocessing as mp
 
@@ -20,7 +18,7 @@ import multiprocessing as mp
 # shuffle and split data
 def split(data_name):
     print('  split data')
-    data, headings = utils.tools.read_csv('./preprocess/'+data_name+'.csv')
+    data, headings = tools.read_csv('./preprocess/'+data_name+'.csv')
     data = np.array(data, dtype=int)
 
     np.random.shuffle(data)
@@ -29,13 +27,13 @@ def split(data_name):
     if not os.path.exists(path):
         os.mkdir(path)
 
-    utils.tools.write_csv(data[:int(0.8*len(data))], headings, './exp_data/'+data_name+'_train.csv')
-    utils.tools.write_csv(data[int(0.8*len(data)):], headings, './exp_data/'+data_name+'_test.csv')
+    tools.write_csv(data[:int(0.8*len(data))], headings, './exp_data/'+data_name+'_train.csv')
+    tools.write_csv(data[int(0.8*len(data)):], headings, './exp_data/'+data_name+'_test.csv')
 
 # evaluate dp data on k way marginal task
 def k_way_marginal(data_name, dp_data_list, k, marginal_num):
-    # data, headings = utils.tools.read_csv('./exp_data/' + data_name + '_train.csv')
-    data, headings = utils.tools.read_csv('./preprocess/' + data_name + '.csv', print_info=False)
+    # data, headings = tools.read_csv('./exp_data/' + data_name + '_train.csv')
+    data, headings = tools.read_csv('./preprocess/' + data_name + '.csv', print_info=False)
     data = np.array(data, dtype=int)
 
     attr_num = data.shape[1]
@@ -57,7 +55,7 @@ def k_way_marginal(data_name, dp_data_list, k, marginal_num):
             histogram, _ = np.histogramdd(data[:, marginal], bins=edge)
             marginal_dict[marginal] = histogram
         else:
-            uniques, cnts = np.unique(data, return_counts=True, axis=0)
+            uniques, cnts = np.unique(data[:, marginal], return_counts=True, axis=0)
             uniques = [tuple(item) for item in uniques]
             cnts = [int(item) for item in cnts]
             marginal_dict[marginal] =  dict(zip(uniques, cnts))
@@ -66,7 +64,7 @@ def k_way_marginal(data_name, dp_data_list, k, marginal_num):
     tvd_list = []
     # for dp_data_path in dp_data_list:
     for dp_data in dp_data_list:
-        # dp_data, headings = utils.tools.read_csv(dp_data_path, print_info=False)
+        # dp_data, headings = tools.read_csv(dp_data_path, print_info=False)
         dp_data = np.array(dp_data, dtype=int)
         dp_data_num = len(dp_data)
         tvd = 0
@@ -79,7 +77,7 @@ def k_way_marginal(data_name, dp_data_list, k, marginal_num):
                 histogram *= data_num/dp_data_num
                 temp_tvd = np.sum(np.abs(marginal_dict[marginal] - histogram)) / len(data) / 2
             else:
-                uniques, cnts = np.unique(dp_data, return_counts=True, axis=0)
+                uniques, cnts = np.unique(dp_data[:, marginal], return_counts=True, axis=0)
                 uniques = [tuple(item) for item in uniques]
                 cnts = [int(item)*data_num/dp_data_num for item in cnts]
                 diff = []
@@ -111,7 +109,7 @@ def svm_classifier(exp_name, data_name, dp_data_list, classifier_num, target_lis
     for k in range(5):
         if k == cross_valid_round:
             continue
-        data_list, _ = utils.tools.read_csv('./exp_data/'+data_name+str(k)+'.csv')
+        data_list, _ = tools.read_csv('./exp_data/'+data_name+str(k)+'.csv')
         data.append(data_list)
     data = [np.array(temp, dtype=int) for temp in data]
     data = np.concatenate(data, axis=0)
@@ -119,7 +117,7 @@ def svm_classifier(exp_name, data_name, dp_data_list, classifier_num, target_lis
     data =  pd.DataFrame(data)
     attr_num = data.shape[1]
 
-    test_data, headings = utils.tools.read_csv('./exp_data/'+data_name+str(cross_valid_round)+'.csv')
+    test_data, headings = tools.read_csv('./exp_data/'+data_name+str(cross_valid_round)+'.csv')
     test_data = np.array(test_data, dtype=int)
     test_data = pd.DataFrame(test_data)
 
@@ -129,7 +127,7 @@ def svm_classifier(exp_name, data_name, dp_data_list, classifier_num, target_lis
             # data_list.append(data)
             pass
         else:
-            dp_data, headings = utils.tools.read_csv(dp_data_list[j-1])
+            dp_data, headings = tools.read_csv(dp_data_list[j-1])
             dp_data = np.array(dp_data, dtype=int)
 
             dp_data = pd.DataFrame(dp_data)
@@ -237,7 +235,7 @@ def cross_validation_data(data_name):
         start = int(j/5 * len(full_data))
         end = int((j+1)/5 * len(full_data))
 
-        utils.tools.write_csv(full_data[start: end], headings, './exp_data/'+data_name+str(j)+'.csv')
+        tools.write_csv(full_data[start: end], headings, './exp_data/'+data_name+str(j)+'.csv')
                 
         
 def svm_exp(data_name_list, method_list, exp_name, \
@@ -271,7 +269,7 @@ def svm_exp(data_name_list, method_list, exp_name, \
 
                     full_data = []
                     for k in range(5):
-                        data_list, _ = utils.tools.read_csv('./exp_data/'+data_name+str(k)+'.csv')
+                        data_list, _ = tools.read_csv('./exp_data/'+data_name+str(k)+'.csv')
                         full_data.append(data_list)
                     full_data = [np.array(temp, dtype=int) for temp in full_data]
 
@@ -281,7 +279,7 @@ def svm_exp(data_name_list, method_list, exp_name, \
                         headings = list(range(len(full_data[0][0])))
 
                         train_data = [full_data[temp] for temp in range(5) if temp != j]
-                        train_data = np.concatenate(full_data, axis=0)
+                        train_data = np.concatenate(train_data, axis=0)
                         pd.DataFrame(train_data).to_csv('./exp_data/'+data_name+'_train.csv', header=headings, index=None)
 
                         dp_data_list = []
@@ -312,7 +310,7 @@ def svm_exp(data_name_list, method_list, exp_name, \
 
                 full_data = []
                 for k in range(5):
-                    data_list, _ = utils.tools.read_csv('./exp_data/'+data_name+str(k)+'.csv')
+                    data_list, _ = tools.read_csv('./exp_data/'+data_name+str(k)+'.csv')
                     full_data.append(data_list)
                 full_data = [np.array(temp, dtype=int) for temp in full_data]
 

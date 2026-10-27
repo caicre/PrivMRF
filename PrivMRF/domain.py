@@ -1,5 +1,4 @@
 from functools import reduce
-import numpy as np
 
 class Domain:
     # attr_list specifies the order of axis
@@ -75,54 +74,3 @@ class Domain:
 
     def __len__(self):
         return len(self.dict)
-
-class Smoother:
-    def __init__(self, histogram, domain, value_range, value_threshold):
-        self.domain = domain
-        histogram = histogram.flatten()
-        values, indices, counts = np.unique(histogram, return_index=True, return_counts=True)
-        value_counts = list(zip(values, indices, counts))
-        value_counts.sort(key=lambda x: x[0])
-
-        min_range = value_counts[0][2]
-        current_range = min_range + value_range
-        
-        self.index_map = {}
-        self.new_index_id = 0
-        for i in range(len(value_counts)):
-            if value_counts[i][0] > value_threshold:
-                break
-            if value_counts[i][0] < current_range:
-                self.index_map[value_counts[i][1]] = self.new_index_id
-            else:
-                while value_counts[i][0] >= current_range:
-                    current_range += value_range
-                self.new_index_id += 1
-                self.index_map[value_counts[i][1]] = self.new_index_id
-        print('compress marginal domain', domain.attr_list, self.new_index_id, domain.size())
-
-    def smoothed_noisy_histogram(self, histogram, domain, noise):
-        if not self.domain.equal(domain):
-            print('error: wrong smoother')
-            exit(-1)
-        histogram = histogram.flatten()
-        values, indices, counts = np.unique(histogram, return_index=True, return_counts=True)
-        
-        new_index_to_value = {index: 0 for index in range(self.new_index_id+1)}
-        new_index_to_index = {index: [] for index in range(self.new_index_id+1)}
-        for index in self.index_map:
-            new_index = self.index_map[index]
-            new_index_to_value[new_index] += histogram[index]
-            new_index_to_index[new_index].append(index)
-        
-        histogram += np.random.normal(scale=noise, size=domain.size())
-
-        for new_index in new_index_to_index:
-            value = new_index_to_value[new_index] + np.random.normal(scale=noise)
-            indices_num = len(new_index_to_index[new_index])
-            for index in new_index_to_index[new_index]:
-                histogram[index] = int(value/indices_num)
-
-        histogram = np.reshape(histogram, domain.shape)
-
-        return histogram

@@ -13,14 +13,13 @@ if __name__ == '__main__':
     json_domain = tools.read_json_domain('./preprocess/nltcs.json')
     domain = Domain(json_domain, list(range(data.shape[1])))
 
-    # you may set hyperparameters or specify other settings here
+    # you may set hyperparameters or specify other settings here,
+    # see DEFAULT_CONFIG in ./PrivMRF/main.py
     config = {
+        'delta': 1e-5,
     }
 
-    # train a PrivMRF, delta=1e-5
-    # for other dp parameter delta, calculate the privacy budget 
-    # with cal_privacy_budget() of ./PrivMRF/utils/tools.py 
-    # and hard code the budget in privacy_budget() of ./PrivMRF/utils/tools.py 
+    # train a PrivMRF
     model = PrivMRF.run(data, domain, attr_hierarchy=None, \
         exp_name='exp', epsilon=0.8, p_config=config)
 
